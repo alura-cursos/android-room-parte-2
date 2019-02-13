@@ -1,6 +1,5 @@
 package br.com.alura.agenda.model;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -20,6 +19,12 @@ public class Telefone {
             onUpdate = CASCADE,
             onDelete = CASCADE)
     private int alunoId;
+
+    public Telefone(String numero, TipoTelefone tipo, int alunoId) {
+        this.numero = numero;
+        this.tipo = tipo;
+        this.alunoId = alunoId;
+    }
 
     public int getAlunoId() {
         return alunoId;
