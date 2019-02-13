@@ -90,17 +90,24 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         preencheAluno();
         if (aluno.temIdValido()) {
             alunoDAO.edita(aluno);
+
+            String numeroFixo = campoTelefoneFixo.getText().toString();
+            Telefone telefoneFixo = new Telefone(numeroFixo,
+                    TipoTelefone.FIXO, aluno.getId());
+            String numeroCelular = campoTelefoneCelular.getText().toString();
+            Telefone telefoneCelular = new Telefone(numeroCelular,
+                    TipoTelefone.CELULAR, aluno.getId());
+
             for (Telefone telefone :
                     telefonesDoAluno) {
                 if (telefone.getTipo() == TipoTelefone.FIXO){
-                    String numeroFixo = campoTelefoneFixo.getText().toString();
-                    telefone.setNumero(numeroFixo);
+                    telefoneFixo.setId(telefone.getId());
                 } else {
-                    String numeroCelular = campoTelefoneCelular.getText().toString();
-                    telefone.setNumero(numeroCelular);
+                    telefoneCelular.setId(telefone.getId());
                 }
-                telefoneDAO.atualiza(telefonesDoAluno);
             }
+
+            telefoneDAO.atualiza(telefoneFixo, telefoneCelular);
         } else {
             int alunoId = alunoDAO.salva(aluno).intValue();
             String numeroFixo = campoTelefoneFixo.getText().toString();
